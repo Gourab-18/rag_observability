@@ -1,0 +1,17 @@
+[
+  {
+    "doc_id": "example_001",
+    "file_name": "example.txt",
+    "file_path": "data/raw/example.txt",
+    "file_type": "txt",
+    "file_size": 0,
+    "upload_date": "2024-01-01T00:00:00Z",
+    "title": "Example Document",
+    "author": "System",
+    "tags": ["example"],
+    "status": "pending",
+    "chunk_count": 0,
+    "processed_date": null
+  }
+]
+
