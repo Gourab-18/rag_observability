@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     # Retrieval Configuration
     retrieval_top_k: int = Field(default=10, env="RETRIEVAL_TOP_K")
     similarity_threshold: float = Field(default=0.7, env="SIMILARITY_THRESHOLD")
-    use_reranking: bool = Field(default=True, env="USE_RERANKING")
+    use_reranking: bool = Field(default=False, env="USE_RERANKING")  # disabled by default, requires local models
     
     # Observability Configuration
     prometheus_port: int = Field(default=8000, env="PROMETHEUS_PORT")

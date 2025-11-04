@@ -119,12 +119,13 @@ class VectorIndexManager:
         # generate embeddings using OpenAI
         embeddings = self.embedding_generator.generate_embeddings(texts)
         
-        # prepare metadata
+        # prepare metadata (include chunk text for retrieval)
         metadata_list = []
         for chunk in chunks:
             metadata_list.append({
                 'doc_id': chunk.doc_id,
                 'chunk_id': chunk.chunk_id,
+                'text': chunk.text,  # store text in payload for retrieval
                 'source': chunk.metadata.get('file_path', ''),
                 'chunk_pos': chunk.overlap_info.get('chunk_position', 0),
                 'created_at': datetime.now().isoformat()

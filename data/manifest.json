@@ -27,6 +27,48 @@
     "tags": [],
     "status": "processed",
     "chunk_count": 2,
-    "processed_date": "2025-11-03T23:33:02.836817Z"
+    "processed_date": "2025-11-05T00:09:35.638515Z"
+  },
+  {
+    "doc_id": "Vision-Life",
+    "file_name": "Vision-Life.pdf",
+    "file_path": "/Users/gourabnanda/Desktop/ML/rag_observability/data/raw/Vision-Life.pdf",
+    "file_type": ".pdf",
+    "file_size": 65508,
+    "upload_date": "2025-11-04T22:06:54.019617Z",
+    "title": "Vision-Life.pdf",
+    "author": "Unknown",
+    "tags": [],
+    "status": "pending",
+    "chunk_count": 0,
+    "processed_date": null
+  },
+  {
+    "doc_id": "Vision-Life",
+    "file_name": "Vision-Life.pdf",
+    "file_path": "/Users/gourabnanda/Desktop/ML/rag_observability/data/raw/Vision-Life.pdf",
+    "file_type": ".pdf",
+    "file_size": 65508,
+    "upload_date": "2025-11-04T23:10:42.532656Z",
+    "title": "Vision-Life.pdf",
+    "author": "Unknown",
+    "tags": [],
+    "status": "pending",
+    "chunk_count": 0,
+    "processed_date": null
+  },
+  {
+    "doc_id": "Vision-Life",
+    "file_name": "Vision-Life.pdf",
+    "file_path": "/Users/gourabnanda/Desktop/ML/rag_observability/data/raw/Vision-Life.pdf",
+    "file_type": ".pdf",
+    "file_size": 65508,
+    "upload_date": "2025-11-05T00:09:35.638109Z",
+    "title": "Vision-Life.pdf",
+    "author": "Unknown",
+    "tags": [],
+    "status": "pending",
+    "chunk_count": 0,
+    "processed_date": null
   }
 ]
