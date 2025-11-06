@@ -1,0 +1,33 @@
+{
+  "name": "sample_dataset",
+  "version": "1.0",
+  "queries": [
+    {
+      "query_id": "sample_1",
+      "query": "What is the main topic of the document?",
+      "ground_truth_answer": "The document discusses the main topic of...",
+      "relevant_doc_ids": [
+        "example_001"
+      ],
+      "relevant_chunk_ids": null,
+      "metadata": {
+        "category": "general"
+      }
+    },
+    {
+      "query_id": "sample_2",
+      "query": "Who is the author?",
+      "ground_truth_answer": "The author is...",
+      "relevant_doc_ids": [
+        "example_001"
+      ],
+      "relevant_chunk_ids": null,
+      "metadata": {
+        "category": "metadata"
+      }
+    }
+  ],
+  "metadata": {
+    "description": "Sample evaluation dataset for testing"
+  }
+}
