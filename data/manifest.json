@@ -70,5 +70,19 @@
     "status": "pending",
     "chunk_count": 0,
     "processed_date": null
+  },
+  {
+    "doc_id": "Bad Science",
+    "file_name": "Bad Science.pdf",
+    "file_path": "/Users/gourabnanda/Desktop/ML/rag_observability/data/raw/Bad Science.pdf",
+    "file_type": ".pdf",
+    "file_size": 1666830,
+    "upload_date": "2025-11-06T12:06:10.946611Z",
+    "title": "Bad Science.pdf",
+    "author": "Unknown",
+    "tags": [],
+    "status": "processed",
+    "chunk_count": 322,
+    "processed_date": "2025-11-06T12:06:10.947187Z"
   }
 ]

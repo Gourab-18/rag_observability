@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'rag-pipeline'
+    environment: 'development'
+
+scrape_configs:
+  - job_name: 'rag-pipeline'
+    static_configs:
+      - targets: ['host.docker.internal:8000']
+        labels:
+          service: 'rag-pipeline'
+          component: 'metrics'
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
