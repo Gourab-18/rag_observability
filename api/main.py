@@ -15,7 +15,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from api.routes import query, feedback, metrics, trace, upload, admin
+from api.routes import query, feedback, metrics, trace, upload, admin, ab_test
 from api.middleware.auth import verify_api_key
 from src.config import settings
 
@@ -44,6 +44,7 @@ app.include_router(metrics.router, prefix="/api", tags=["metrics"])
 app.include_router(trace.router, prefix="/api", tags=["trace"])
 app.include_router(upload.router, prefix="/api", tags=["upload"])
 app.include_router(admin.router, prefix="/api", tags=["admin"])
+app.include_router(ab_test.router, prefix="/api", tags=["ab-test"])
 
 
 @app.get("/")

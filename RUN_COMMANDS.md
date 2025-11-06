@@ -1350,7 +1350,214 @@ curl http://localhost:8001/api/admin/stats
 - Manifest file (resets to empty)
 - Raw files are kept (can be re-indexed)
 
+## 🧪 Testing Commands
+
+### A/B Testing
+
+```bash
+# Run A/B test via API
+curl -X POST http://localhost:8001/api/ab-test \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What is your vision?",
+    "variants": ["v1", "v2"],
+    "top_k": 5
+  }'
+
+# Get A/B test results
+curl http://localhost:8001/api/ab-test/results
+
+# Run A/B test via script
+python3 scripts/test_ab_testing.py
+```
+
+### Evaluation Testing
+
+```bash
+# Run evaluation suite
+python3 scripts/test_evaluation.py
+
+# Create sample evaluation dataset
+python3 -c "
+from src.eval import DatasetLoader
+DatasetLoader.create_sample_dataset('data/eval/sample_dataset.json')
+"
+
+# View evaluation results
+cat data/eval/results.json | python3 -m json.tool
+```
+
+### API Endpoint Testing
+
+```bash
+# Test all API endpoints
+echo "=== Testing API Endpoints ==="
+
+# Health check
+curl http://localhost:8001/health
+
+# Query endpoint
+curl -X POST http://localhost:8001/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "test", "top_k": 3}'
+
+# Metrics endpoint
+curl http://localhost:8001/api/metrics
+
+# Trace endpoint
+curl http://localhost:8001/api/trace/test_123
+
+# Feedback endpoint
+curl -X POST http://localhost:8001/api/feedback \
+  -H "Content-Type: application/json" \
+  -d '{"trace_id": "test", "rating": 5}'
+
+# Admin stats
+curl http://localhost:8001/api/admin/stats
+
+# A/B test
+curl -X POST http://localhost:8001/api/ab-test \
+  -H "Content-Type: application/json" \
+  -d '{"query": "test", "variants": ["v1", "v2"]}'
+```
+
+### Component Testing
+
+```bash
+# Test retriever
+python3 scripts/test_retrieval_simple.py "What is your vision?"
+
+# Test generator
+python3 scripts/test_generation.py "What is your vision?"
+
+# Test observability
+python3 scripts/test_observability.py
+
+# Test caching
+python3 -c "
+from src.cache import cache_manager
+stats = cache_manager.get_cache_stats()
+print('Cache stats:', stats)
+"
+
+# Test circuit breaker
+python3 -c "
+from src.utils.circuit_breaker import get_circuit_breaker
+cb = get_circuit_breaker('openai')
+print('Circuit breaker state:', cb.get_state())
+"
+```
+
+### Integration Testing
+
+```bash
+# Run full pipeline test
+python3 scripts/run_all.py
+
+# Test end-to-end query flow
+python3 -c "
+from src.retrieval import DenseRetriever
+from src.generator import LLMGenerator
+
+retriever = DenseRetriever()
+generator = LLMGenerator()
+
+query = 'What is your vision?'
+chunks = retriever.retrieve(query, top_k=5)
+if chunks:
+    response = generator.generate(query, chunks)
+    print('Answer:', response.answer[:200])
+    print('Sources:', len(response.sources))
+else:
+    print('No chunks found')
+"
+```
+
+### Service Health Checks
+
+```bash
+# Check all services
+echo "=== Service Health Checks ==="
+
+# Qdrant
+curl http://localhost:6333/health
+
+# Redis
+docker exec rag_redis redis-cli ping
+
+# Prometheus
+curl http://localhost:9090/-/healthy
+
+# Grafana
+curl http://localhost:3000/api/health
+
+# API
+curl http://localhost:8001/health
+
+# Frontend
+curl http://localhost:5173 > /dev/null && echo "Frontend OK" || echo "Frontend not responding"
+```
+
+### Performance Testing
+
+```bash
+# Test query latency
+time curl -X POST http://localhost:8001/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "test", "top_k": 5}'
+
+# Test cache performance
+python3 -c "
+import time
+from src.cache import cache_manager
+from src.retrieval import DenseRetriever
+
+retriever = DenseRetriever()
+query = 'What is your vision?'
+
+# First call (cache miss)
+start = time.time()
+chunks1 = retriever.retrieve(query, use_cache=True)
+time1 = time.time() - start
+
+# Second call (cache hit)
+start = time.time()
+chunks2 = retriever.retrieve(query, use_cache=True)
+time2 = time.time() - start
+
+print(f'First call (miss): {time1:.3f}s')
+print(f'Second call (hit): {time2:.3f}s')
+print(f'Speedup: {time1/time2:.2f}x')
+"
+```
+
+### Database Testing
+
+```bash
+# Check Qdrant collection stats
+python3 -c "
+from qdrant_client import QdrantClient
+from src.config import settings
+
+client = QdrantClient(url=settings.qdrant_url)
+info = client.get_collection(settings.qdrant_collection_name)
+print(f'Collection: {settings.qdrant_collection_name}')
+print(f'Points: {info.points_count}')
+print(f'Vectors: {info.vectors_count}')
+"
+
+# Check Redis cache stats
+python3 -c "
+from src.cache import cache_manager
+stats = cache_manager.get_cache_stats()
+print('Cache stats:', stats)
+"
+
+# Check manifest
+cat data/manifest.json | python3 -m json.tool
+```
+
 ---
 
-**Last Updated**: Task 9 (API Backend and React Frontend) completed + Admin features added
+**Last Updated**: Task 9 (API Backend and React Frontend) completed + Admin features added + A/B Testing added
 

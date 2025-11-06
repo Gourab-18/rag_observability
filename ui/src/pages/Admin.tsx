@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import MetricsDashboard from '../components/MetricsDashboard'
 import ClearContextButton from '../components/ClearContextButton'
+import ABTestPanel from '../components/ABTestPanel'
 import { ArrowLeft } from 'lucide-react'
 
 export default function Admin() {
@@ -25,6 +26,8 @@ export default function Admin() {
 
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
         <MetricsDashboard />
+        
+        <ABTestPanel />
         
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Database Management</h2>

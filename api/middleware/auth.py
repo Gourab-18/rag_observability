@@ -1,7 +1,4 @@
-"""
-Authentication middleware for API endpoints.
-Supports API key authentication.
-"""
+# Admin key authentication ( ignored for testing purposes )
 
 from fastapi import HTTPException, Header
 from typing import Optional
