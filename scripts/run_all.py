@@ -64,7 +64,9 @@ def main():
     parser.add_argument("--skip-ingest", action="store_true", help="Skip document ingestion")
     parser.add_argument("--skip-index", action="store_true", help="Skip embedding and indexing")
     parser.add_argument("--skip-retrieval", action="store_true", help="Skip retrieval test")
+    parser.add_argument("--skip-generation", action="store_true", help="Skip LLM generation test")
     parser.add_argument("--query", type=str, default="What is your vision?", help="Query for retrieval test")
+    parser.add_argument("--prompt-version", type=str, default="v1", help="Prompt version for generation")
     
     args = parser.parse_args()
     
@@ -124,6 +126,15 @@ def main():
         )
     else:
         print("\n⏭️  Skipping retrieval test")
+    
+    # Step 5: LLM Generation Test
+    if not args.skip_generation:
+        run_command(
+            f"python3 scripts/test_generation.py '{args.query}' {args.prompt_version}",
+            f"Test LLM generation with query: '{args.query}' (prompt: {args.prompt_version})"
+        )
+    else:
+        print("\n⏭️  Skipping LLM generation test")
     
     print("\n" + "="*60)
     print("✅ Pipeline Complete!")

@@ -1,0 +1,14 @@
+# Prompt version metadata
+
+v1:
+  description: "Basic RAG prompt template"
+  created: "2024-01-01"
+  author: "System"
+  default: true
+
+v2:
+  description: "Enhanced RAG prompt with structured instructions"
+  created: "2024-01-15"
+  author: "System"
+  default: false
+
