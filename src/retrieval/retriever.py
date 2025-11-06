@@ -8,7 +8,7 @@ from qdrant_client import QdrantClient
 
 from src.config import settings
 from src.utils.embeddings import EmbeddingGenerator
-# Note: Chunk is imported but not used in this file - can be removed if needed
+from src.cache import cache_manager
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,8 @@ class DenseRetriever:
         query: str,
         top_k: int = None,
         collection_name: str = None,
-        score_threshold: float = None
+        score_threshold: float = None,
+        use_cache: bool = True
     ) -> List[RetrievedChunk]:
         # retrieve top-k relevant chunks for a query
         top_k = top_k if top_k is not None else settings.retrieval_top_k
@@ -45,8 +46,33 @@ class DenseRetriever:
         if score_threshold is None:
             score_threshold = settings.similarity_threshold
         
-        # generate query embedding
-        query_embedding = self.embedding_generator.generate_embeddings([query])[0]
+        # Check cache first
+        if use_cache:
+            cached_results = cache_manager.get_retrieval_results(query)
+            if cached_results:
+                # Convert cached dicts back to RetrievedChunk objects
+                return [
+                    RetrievedChunk(
+                        text=item['text'],
+                        metadata=item['metadata'],
+                        score=item['score'],
+                        chunk_id=item['chunk_id'],
+                        doc_id=item['doc_id']
+                    )
+                    for item in cached_results
+                ]
+        
+        # Check cache for embedding
+        query_embedding = None
+        if use_cache:
+            query_embedding = cache_manager.get_query_embedding(query)
+        
+        # Generate embedding if not cached
+        if query_embedding is None:
+            query_embedding = self.embedding_generator.generate_embeddings([query])[0]
+            # Cache embedding
+            if use_cache:
+                cache_manager.cache_query_embedding(query, query_embedding)
         
         try:
             # search in Qdrant
@@ -78,6 +104,11 @@ class DenseRetriever:
                 ))
             
             logger.info(f"Retrieved {len(retrieved_chunks)} chunks for query")
+            
+            # Cache results
+            if use_cache:
+                cache_manager.cache_retrieval_results(query, retrieved_chunks)
+            
             return retrieved_chunks
             
         except Exception as e:

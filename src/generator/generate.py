@@ -9,6 +9,8 @@ from datetime import datetime
 from src.retrieval.retriever import RetrievedChunk
 from src.generator.prompt_manager import PromptManager
 from src.config import settings
+from src.cache import cache_manager
+from src.utils.circuit_breaker import get_circuit_breaker, CircuitBreakerOpenError
 
 logger = logging.getLogger(__name__)
 
@@ -54,9 +56,19 @@ class LLMGenerator:
         context_chunks: List[RetrievedChunk],
         prompt_version: str = 'v1',
         model_type: str = 'openai',
-        fallback: bool = True
+        fallback: bool = True,
+        use_cache: bool = True
     ) -> LLMResponse:
         # generate response from LLM using query and context chunks
+        
+        # Check cache first
+        if use_cache:
+            cached_response = cache_manager.get_llm_response(query)
+            if cached_response:
+                # Reconstruct LLMResponse from cached dict
+                response = LLMResponse(**cached_response)
+                logger.info(f"Cache hit for LLM response: {query[:50]}...")
+                return response
         
         # load prompt template
         try:
@@ -77,12 +89,27 @@ class LLMGenerator:
         # generate trace ID
         trace_id = str(uuid.uuid4())
         
-        # call LLM
+        # call LLM with circuit breaker protection
         try:
             if model_type == 'openai' or (model_type == 'auto' and self.openai_client):
-                response = self._call_openai(prompt, trace_id)
+                circuit_breaker = get_circuit_breaker("openai")
+                try:
+                    with circuit_breaker:
+                        response = self._call_openai(prompt, trace_id)
+                except CircuitBreakerOpenError:
+                    logger.warning("OpenAI circuit breaker is OPEN. Falling back to Ollama...")
+                    if fallback:
+                        response = self._call_ollama(prompt, trace_id)
+                    else:
+                        raise
             elif model_type == 'ollama' or (fallback and model_type == 'auto'):
-                response = self._call_ollama(prompt, trace_id)
+                circuit_breaker = get_circuit_breaker("ollama")
+                try:
+                    with circuit_breaker:
+                        response = self._call_ollama(prompt, trace_id)
+                except CircuitBreakerOpenError:
+                    logger.warning("Ollama circuit breaker is OPEN.")
+                    raise
             else:
                 raise ValueError(f"Unknown model type: {model_type}")
             
@@ -90,13 +117,32 @@ class LLMGenerator:
             response.prompt_version = prompt_version
             response.sources = sources
             
+            # Cache response
+            if use_cache:
+                cache_manager.cache_llm_response(query, {
+                    "answer": response.answer,
+                    "sources": response.sources,
+                    "trace_id": response.trace_id,
+                    "token_usage": response.token_usage,
+                    "prompt_version": response.prompt_version,
+                    "model_used": response.model_used,
+                    "cost_estimate": response.cost_estimate
+                })
+            
             return response
             
         except Exception as e:
             logger.error(f"Error generating response: {e}")
             if fallback and model_type == 'openai':
                 logger.info("Falling back to Ollama...")
-                return self._call_ollama(prompt, trace_id)
+                try:
+                    response = self._call_ollama(prompt, trace_id)
+                    response.prompt_version = prompt_version
+                    response.sources = sources
+                    return response
+                except Exception as fallback_error:
+                    logger.error(f"Fallback also failed: {fallback_error}")
+                    raise
             raise
     
     def _format_context(self, chunks: List[RetrievedChunk]) -> str:
