@@ -5,8 +5,8 @@ A production-ready RAG (Retrieval Augmented Generation) system with full observa
 ## Features
 
 - 📄 **Document Ingestion**: PDF and text file processing with token-aware chunking
-- 🔍 **Vector Search**: Dense retrieval with Qdrant, optional reranking and compression
-- 🤖 **LLM Generation**: OpenAI API with local fallback (Ollama)
+- 🔍 **Vector Search**: Dense retrieval with Qdrant
+- 🤖 **LLM Generation**: OpenAI API 
 - 📊 **Observability**: OpenTelemetry tracing, Prometheus metrics, Grafana dashboards
 - 🧪 **Evaluation**: Automated evaluation suite with precision@k, hallucination detection
 - 💾 **Caching**: Redis caching for embeddings, retrieval, and LLM responses
@@ -78,16 +78,16 @@ docker-compose up -d
 ## Implementation Plan
 
 Following a 10-task implementation plan:
-- ✅ Task 1: Project Spec and Metrics Setup
-- ⏳ Task 2: Chunking Pipeline
-- ⏳ Task 3: Embeddings and Vector Index
-- ⏳ Task 4: Retriever and Compressor
-- ⏳ Task 5: Generator and Prompt Versioning
-- ⏳ Task 6: Observability and Tracing
-- ⏳ Task 7: Evaluation Harness and CI
-- ⏳ Task 8: Resilience, Caching, and A/B Testing
-- ⏳ Task 9: Provenance UI and Feedback Loop
-- ⏳ Task 10: Privacy, Scaling, and Cost Optimization
+- ✅  Project Spec and Metrics Setup
+- ✅  Chunking Pipeline
+- ✅  Embeddings and Vector Index
+- ✅  Retriever and Compressor
+- ✅  Generator and Prompt Versioning
+- ✅  Observability and Tracing
+- x  Evaluation Harness and CI
+- ✅  Resilience, Caching, and A/B Testing
+- ✅  Provenance UI and Feedback Loop
+- x  Privacy, Scaling, and Cost Optimization
 
 See [plan.md](plan.md) for detailed task breakdown.
 
