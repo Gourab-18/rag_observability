@@ -74,7 +74,7 @@ class DenseRetriever:
             if use_cache:
                 cache_manager.cache_query_embedding(query, query_embedding)
         
-        try:
+        try: 
             # search in Qdrant
             # don't pass score_threshold if it's 0.0 (show all results)
             search_params = {

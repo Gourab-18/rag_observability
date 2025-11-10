@@ -13,6 +13,7 @@ from src.ingest import DocumentLoader, DocumentChunker
 from src.config import settings, ManifestManager
 
 
+# loads and chunks the file
 def main():
     if len(sys.argv) < 2:
         print("Usage: python scripts/ingest_document.py <file_path>")
@@ -30,6 +31,9 @@ def main():
     loader = DocumentLoader()
     try:
         doc = loader.load_document(file_path)
+        # returns entire text and metadata like path, name size and all
+        # print(doc)
+        # print(doc['metadata'])
         print(f"✓ Document loaded: {len(doc['text'])} characters")
     except Exception as e:
         print(f"✗ Error loading document: {e}")
@@ -51,6 +55,8 @@ def main():
             doc['metadata']
         )
         print(f"✓ Created {len(chunks)} chunks")
+        # print("chunks")
+        # print(chunks)
         
         # Print chunk statistics
         total_tokens = sum(chunk.token_count for chunk in chunks)

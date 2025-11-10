@@ -142,11 +142,11 @@ python3 scripts/embed_and_index.py data/processed/Vision-Life_chunks.jsonl
 ### Retrieval Testing
 ```bash
 # Basic usage
-python3 scripts/test_retrieval.py <query>
+python3 scripts/test_retrieval_simple.py <query>
 
 # Examples
-python3 scripts/test_retrieval.py "What is your vision?"
-python3 scripts/test_retrieval.py "Explain the main concepts"
+python3 scripts/test_retrieval_simple.py "What is your vision?"
+python3 scripts/test_retrieval_simple.py "Explain the main concepts"
 ```
 
 ## 🔍 Verification Commands
@@ -250,7 +250,7 @@ docker-compose up -d && \
 sleep 5 && \
 python3 scripts/ingest_document.py data/raw/Vision-Life.pdf && \
 python3 scripts/embed_and_index.py data/processed/Vision-Life_chunks.jsonl && \
-python3 scripts/test_retrieval.py "What is your vision?"
+python3 scripts/test_retrieval_simple.py "What is your vision?"
 
 # Process all PDFs and index them
 for pdf in data/raw/*.pdf; do

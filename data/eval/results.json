@@ -1,0 +1,60 @@
+[
+  {
+    "query_id": "sample_1",
+    "retrieval_metrics": {
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.0,
+      "precision_at_5": 0.0,
+      "recall": 0.0,
+      "mean_reciprocal_rank": 0.0
+    },
+    "generation_metrics": {
+      "bleu_score": 0.22997519112894443,
+      "rouge_l_score": 0.4210526315789474,
+      "answer_length": 70,
+      "reference_length": 43
+    },
+    "faithfulness_score": {
+      "is_faithful": false,
+      "confidence": 0.0,
+      "unsupported_claims": [],
+      "supported_claims": []
+    },
+    "latency": 4.055218935012817,
+    "token_usage": {
+      "prompt_tokens": 106,
+      "completion_tokens": 13,
+      "total_tokens": 119
+    },
+    "cost_estimate": 0.000185
+  },
+  {
+    "query_id": "sample_2",
+    "retrieval_metrics": {
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.0,
+      "precision_at_5": 0.0,
+      "recall": 0.0,
+      "mean_reciprocal_rank": 0.0
+    },
+    "generation_metrics": {
+      "bleu_score": 0.050712153369465586,
+      "rouge_l_score": 0.36363636363636365,
+      "answer_length": 50,
+      "reference_length": 16
+    },
+    "faithfulness_score": {
+      "is_faithful": false,
+      "confidence": 0.0,
+      "unsupported_claims": [],
+      "supported_claims": []
+    },
+    "latency": 3.983077049255371,
+    "token_usage": {
+      "prompt_tokens": 102,
+      "completion_tokens": 9,
+      "total_tokens": 111
+    },
+    "cost_estimate": 0.000171
+  }
+]

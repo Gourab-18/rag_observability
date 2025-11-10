@@ -71,6 +71,7 @@ def main():
         # test query to validate
         print("\nTesting vector index with sample query...")
         test_query = chunks[0].text[:100] if chunks else "test"
+        print(test_query)
         results = index_manager.query_chunks(test_query, top_k=3)
         print(f"✓ Query returned {len(results)} results")
         if results:

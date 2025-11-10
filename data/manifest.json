@@ -1,44 +1,16 @@
 [
   {
-    "doc_id": "Bad_Science",
-    "file_name": "Bad_Science.pdf",
-    "file_path": "/Users/gourabnanda/Desktop/ML/rag_observability/data/raw/Bad_Science.pdf",
-    "file_type": ".pdf",
-    "file_size": 1666830,
-    "upload_date": "2025-11-06T18:47:54.516305Z",
-    "title": "Bad_Science.pdf",
-    "author": "Unknown",
-    "tags": [],
-    "status": "processed",
-    "chunk_count": 322,
-    "processed_date": "2025-11-07T00:05:39.192736Z"
-  },
-  {
     "doc_id": "Vision-Life",
     "file_name": "Vision-Life.pdf",
     "file_path": "/Users/gourabnanda/Desktop/ML/rag_observability/data/raw/Vision-Life.pdf",
     "file_type": ".pdf",
     "file_size": 65508,
-    "upload_date": "2025-11-06T20:10:34.204728Z",
+    "upload_date": "2025-11-08T21:14:50.382755Z",
     "title": "Vision-Life.pdf",
     "author": "Unknown",
     "tags": [],
     "status": "processed",
     "chunk_count": 2,
-    "processed_date": "2025-11-06T20:10:34.205203Z"
-  },
-  {
-    "doc_id": "Bad_Science",
-    "file_name": "Bad_Science.pdf",
-    "file_path": "/Users/gourabnanda/Desktop/ML/rag_observability/data/raw/Bad_Science.pdf",
-    "file_type": ".pdf",
-    "file_size": 1666830,
-    "upload_date": "2025-11-07T00:05:39.191941Z",
-    "title": "Bad_Science.pdf",
-    "author": "Unknown",
-    "tags": [],
-    "status": "pending",
-    "chunk_count": 0,
-    "processed_date": null
+    "processed_date": "2025-11-08T21:14:50.383236Z"
   }
 ]

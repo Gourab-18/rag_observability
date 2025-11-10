@@ -30,6 +30,8 @@ class EmbeddingGenerator:
                 model=settings.openai_embedding_model,
                 input=texts
             )
+
+            # print("response", response.data)
             
             # extract embeddings
             embeddings = [item.embedding for item in response.data]

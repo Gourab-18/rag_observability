@@ -82,7 +82,7 @@ class VectorIndexManager:
             points = []
             for i, (vector, meta) in enumerate(zip(vectors, metadata)):
                 point = PointStruct(
-                    id=i,  # simple ID - could use hash or UUID for better uniqueness
+                    id=i, 
                     vector=vector,
                     payload=meta
                 )

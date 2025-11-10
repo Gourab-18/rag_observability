@@ -53,7 +53,11 @@ def main():
     print("Step 3: Compressing chunks (score filtering)...")
     try:
         compressor = ChunkCompressor()
-        compressed_chunks = compressor.compress_chunks(chunks, strategy='score_filter')
+        print("chunks")
+        print(chunks)
+        compressed_chunks = compressor.compress_chunks(chunks, strategy='bm25')
+        print("compressed_chunks")
+        print(compressed_chunks)
         
         print(f"✓ Compressed: {len(chunks)} -> {len(compressed_chunks)} chunks")
         
