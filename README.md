@@ -1,3 +1,6 @@
+Complete Overview- 
+https://deepwiki.com/Gourab-18/rag_observability
+
 # RAG System with Observability
 
 A production-ready RAG (Retrieval Augmented Generation) system with full observability, evaluation, and user feedback capabilities.
